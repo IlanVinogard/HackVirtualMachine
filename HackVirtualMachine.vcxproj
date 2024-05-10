@@ -130,15 +130,14 @@
     <ClCompile Include="HackVirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CodeWriter.h" />
-    <ClInclude Include="RAM.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="Utility.h" />
+    <ClInclude Include="VM\CodeWriter.h" />
+    <ClInclude Include="VM\Utility\RAM.h" />
+    <ClInclude Include="VM\Utility\Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicTest.vm" />
-    <None Include="Prog.asm" />
+    <None Include="Tests\BasicTest.vm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

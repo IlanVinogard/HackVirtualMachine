@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../HackVirtualMachine/Utility.h"
+#include "../HackVirtualMachine/VM/Utility/Utility.h"
 #include "../HackVirtualMachine/Parser.h"
 #include "../HackVirtualMachine/VirtualMachine.h"
 

@@ -32,27 +32,24 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Utility.h">
-      <Filter>Source Files\VM\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="VirtualMachine.h">
-      <Filter>Source Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="CodeWriter.h">
       <Filter>Source Files\VM</Filter>
     </ClInclude>
     <ClInclude Include="Parser.h">
       <Filter>Source Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="RAM.h">
+    <ClInclude Include="VM\Utility\RAM.h">
       <Filter>Source Files\VM\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="VM\Utility\Utility.h">
+      <Filter>Source Files\VM\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="VM\CodeWriter.h">
+      <Filter>Source Files\VM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Prog.asm">
-      <Filter>Source Files\Result</Filter>
-    </None>
-    <None Include="BasicTest.vm">
+    <None Include="Tests\BasicTest.vm">
       <Filter>Source Files\Tests</Filter>
     </None>
   </ItemGroup>
