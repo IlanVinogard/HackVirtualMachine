@@ -4,7 +4,7 @@
 
 class Parser {
 public:
-	static string cleanAndValidateLine(const string& line) {
+    static string cleanAndValidateLine(const string& line) {
         regex pattern("\\s+");
         string validLine = regex_replace(line, pattern, " ");
 
@@ -15,12 +15,12 @@ public:
         if (firstNonSpace != std::string::npos && lastNonSpace != std::string::npos) {
             validLine = validLine.substr(firstNonSpace, lastNonSpace - firstNonSpace + 1);
         }
-        
-        return validLine;
-	}
 
-	static bool isNotCommentLine(const string line) {
-		if (line.empty() || line.find("//") != string::npos) return false;
-		return true;
-	}
+        return validLine;
+    }
+
+    static bool isNotCommentLine(const string line) {
+        if (line.empty() || line.find("//") != string::npos) return false;
+        return true;
+    }
 };

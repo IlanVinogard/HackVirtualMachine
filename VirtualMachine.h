@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
 #include <fstream>
 #include "Parser.h"
-#include "CodeWriter.h"
+#include "../HackVirtualMachine/VM/CodeWriter.h"
 #include <string>
 
 using namespace std;
@@ -42,7 +41,8 @@ public:
 					output << "//" + validLine << endl;
 
 					// Logic Code In Process :D
-				} catch (const runtime_error& e) {
+				}
+				catch (const runtime_error& e) {
 					cerr << "Error: " << e.what() << endl;
 				}
 			}
