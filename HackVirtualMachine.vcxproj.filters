@@ -35,9 +35,6 @@
     <ClInclude Include="VirtualMachine.h">
       <Filter>Source Files\VM</Filter>
     </ClInclude>
-    <ClInclude Include="Parser.h">
-      <Filter>Source Files\VM</Filter>
-    </ClInclude>
     <ClInclude Include="VM\Utility\RAM.h">
       <Filter>Source Files\VM\Utility</Filter>
     </ClInclude>
@@ -45,6 +42,9 @@
       <Filter>Source Files\VM\Utility</Filter>
     </ClInclude>
     <ClInclude Include="VM\CodeWriter.h">
+      <Filter>Source Files\VM</Filter>
+    </ClInclude>
+    <ClInclude Include="VM\Parser.h">
       <Filter>Source Files\VM</Filter>
     </ClInclude>
   </ItemGroup>

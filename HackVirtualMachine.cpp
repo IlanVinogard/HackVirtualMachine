@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../HackVirtualMachine/VM/Utility/Utility.h"
-#include "../HackVirtualMachine/Parser.h"
-#include "../HackVirtualMachine/VirtualMachine.h"
+#include "../HackVirtualMachine/VM/Parser.h"
+#include "../HackVirtualMachine/VM/VirtualMachine.h"
 
 int main()
 {

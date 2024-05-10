@@ -131,13 +131,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
-    <ClInclude Include="Parser.h" />
     <ClInclude Include="VM\CodeWriter.h" />
+    <ClInclude Include="VM\Parser.h" />
     <ClInclude Include="VM\Utility\RAM.h" />
     <ClInclude Include="VM\Utility\Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BasicTest.vm" />
+    <None Include="Tests/BasicTest.vm" />
     <None Include="Prog.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
