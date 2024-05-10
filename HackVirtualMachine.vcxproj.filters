@@ -49,8 +49,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Tests\BasicTest.vm">
+    <None Include="Tests/BasicTest.vm">
       <Filter>Source Files\Tests</Filter>
+    </None>
+    <None Include="Prog.asm">
+      <Filter>Source Files\Result</Filter>
     </None>
   </ItemGroup>
 </Project>
