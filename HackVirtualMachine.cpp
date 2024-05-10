@@ -23,6 +23,17 @@ int main()
             }
 
             VirtualMachine virtualMachine(path, "Prog.asm");
+
+            try {
+                cout << "File successfully opened" << endl;
+                // converting file to new file named XXX.asm.
+                virtualMachine.convertFile();
+
+                cout << "Finished converting!\n" << endl;
+
+            } catch (const runtime_error& e) {
+                cerr << "Error during translating: " << e.what() << endl;
+            }
         }
     }
     catch (const exception& e) {

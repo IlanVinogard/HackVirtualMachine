@@ -3,6 +3,7 @@
 #include <fstream>
 #include "Parser.h"
 #include "CodeWriter.h"
+#include <string>
 
 using namespace std;
 
@@ -31,6 +32,20 @@ public:
 	}
 
 	void convertFile() {
-		// code.
+		string line;
+		while (getline(input, line)) {
+			if (Parser::isNotCommentLine(line)) {
+				try {
+					string validLine = Parser::cleanAndValidateLine(line);
+
+					// Add comment to file.
+					output << "//" + validLine << endl;
+
+					// Logic Code In Process :D
+				} catch (const runtime_error& e) {
+					cerr << "Error: " << e.what() << endl;
+				}
+			}
+		}
 	}
 };
