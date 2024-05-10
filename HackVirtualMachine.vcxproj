@@ -131,9 +131,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CodeWriter.h" />
+    <ClInclude Include="RAM.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BasicTest.vm" />
+    <None Include="Prog.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

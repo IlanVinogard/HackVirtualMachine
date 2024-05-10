@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../HackVirtualMachine/Utility.h"
 #include "../HackVirtualMachine/Parser.h"
+#include "../HackVirtualMachine/VirtualMachine.h"
 
 int main()
 {
@@ -21,7 +22,7 @@ int main()
                 Ui::clear();
             }
 
-
+            VirtualMachine virtualMachine(path, "Prog.asm");
         }
     }
     catch (const exception& e) {

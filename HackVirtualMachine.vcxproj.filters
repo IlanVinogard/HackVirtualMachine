@@ -19,6 +19,12 @@
     <Filter Include="Source Files\VM\Utility">
       <UniqueIdentifier>{6a47cef4-df69-460b-9600-fa4db00db806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{6405dfac-0fac-43dd-8fa2-9700d0331a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Result">
+      <UniqueIdentifier>{1f7bf67f-0d9b-47d0-8020-e74acc7dc378}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HackVirtualMachine.cpp">
@@ -38,5 +44,16 @@
     <ClInclude Include="Parser.h">
       <Filter>Source Files\VM</Filter>
     </ClInclude>
+    <ClInclude Include="RAM.h">
+      <Filter>Source Files\VM\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Prog.asm">
+      <Filter>Source Files\Result</Filter>
+    </None>
+    <None Include="BasicTest.vm">
+      <Filter>Source Files\Tests</Filter>
+    </None>
   </ItemGroup>
 </Project>
