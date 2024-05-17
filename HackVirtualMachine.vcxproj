@@ -139,7 +139,10 @@
   <ItemGroup>
     <None Include="Tests/BasicTest.vm" />
     <None Include="Prog.asm" />
+    <None Include="Tests\PointerTest.vm" />
     <None Include="Tests\SimpleAdd.vm" />
+    <None Include="Tests\StackTest.vm" />
+    <None Include="Tests\StaticTest.vm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

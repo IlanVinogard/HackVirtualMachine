@@ -58,5 +58,14 @@
     <None Include="Tests\SimpleAdd.vm">
       <Filter>Source Files\Tests</Filter>
     </None>
+    <None Include="Tests\PointerTest.vm">
+      <Filter>Source Files\Tests</Filter>
+    </None>
+    <None Include="Tests\StackTest.vm">
+      <Filter>Source Files\Tests</Filter>
+    </None>
+    <None Include="Tests\StaticTest.vm">
+      <Filter>Source Files\Tests</Filter>
+    </None>
   </ItemGroup>
 </Project>

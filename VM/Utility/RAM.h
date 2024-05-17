@@ -4,13 +4,17 @@
 #include <unordered_map>
 #include <stack>
 #include <stdexcept>
+#include "../Utility/Utility.h"
+#include <iomanip>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
 class RAM {
 private:
     unordered_map<string, int> addresses;
-    unordered_map<int, int> memory; // ????????? ??? ???????? ???????? ?? ???????? ???????
+    unordered_map<int, int> memory;
     stack<int> myStack;
 
 public:
@@ -68,11 +72,41 @@ public:
     }
 
     void printRAM() const {
+        // Clear the console (platform-specific)
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
+
+        // Print RAM addresses
+        cout << "=== Special Registers ===" << endl;
         for (const auto& pair : addresses) {
-            cout << pair.first << ": " << pair.second << endl;
+            cout << setw(5) << left << pair.first << ": " << pair.second << endl;
         }
+
+        cout << "\n=== Stack ===" << endl;
+        stack<int> tempStack = myStack;
+        int stackIndex = addresses.at("SP") - 1;
+        while (!tempStack.empty()) {
+            cout << "SP[" << stackIndex << "]: " << tempStack.top() << endl;
+            tempStack.pop();
+            stackIndex--;
+        }
+
+        cout << "\n=== Memory ===" << endl;
         for (const auto& pair : memory) {
-            cout << pair.first << ": " << pair.second << endl;
+            cout << "RAM[" << pair.first << "]: " << pair.second << endl;
         }
+
+        // Pause for a while to allow the user to read
+        this_thread::sleep_for(chrono::milliseconds(2000));
+
+        // Clear the console again for the next output
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
     }
 };

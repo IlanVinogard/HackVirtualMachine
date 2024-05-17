@@ -74,7 +74,9 @@ public:
         return validLine;
     }
 
-    static string arg1(const string& line) {
+    static string arg1(const string& commandType, const string& line) {
+        if (commandType == "C_ARITHMETIC") return line;
+
         string remaining = updateValidLine(line);
         size_t firstSpace = remaining.find_first_of(' ');
         if (firstSpace == string::npos) return remaining;

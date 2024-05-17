@@ -48,14 +48,14 @@ public:
 					string commandType = Parser::commandType(validLine);
 					
 					// write command to file.
-					if (commandType == "C_ARITHMEIC") {
-						codeWriter.writeArithmetic(Parser::arg1(validLine));
+					if (commandType == "C_ARITHMETIC") {
+						codeWriter.writeArithmetic(Parser::arg1(commandType, validLine));
 					}
 					else if (commandType == "C_PUSH" || commandType == "C_POP") {
-						codeWriter.writePushPop(commandType, Parser::arg1(validLine), Parser::arg2(validLine));
+						codeWriter.writePushPop(commandType, Parser::arg1(commandType, validLine), Parser::arg2(validLine));
 					} // continue next chapter ...
 
-					//add print RAM.
+					ram.printRAM();
 				} catch (const runtime_error& e) {
 					cerr << "Error: " << e.what() << endl;
 				}
