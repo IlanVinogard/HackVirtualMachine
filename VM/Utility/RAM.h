@@ -3,51 +3,76 @@
 #include <string>
 #include <unordered_map>
 #include <stack>
+#include <stdexcept>
 
 using namespace std;
 
 class RAM {
 private:
-	unordered_map<string, int> addresses;
-	stack<int> myStack;
+    unordered_map<string, int> addresses;
+    unordered_map<int, int> memory; // ????????? ??? ???????? ???????? ?? ???????? ???????
+    stack<int> myStack;
 
 public:
-	RAM() {
-		addresses = {
-			{"SP", 256}, {"LCL", 0}, {"ARG", 0}, {"THIS", 0}, {"THAT", 0}, {"Temp0", 0},
-			{"Temp1", 0}, {"Temp2", 0}, {"Temp3", 0}, {"Temp4", 0}, {"Temp5", 0},
-			{"Temp6", 0}, {"Temp7", 0}, {"R13", 0}, {"R14", 0}, {"R15", 0}
-		};
-	}
+    RAM() {
+        // Initialize special registers with appropriate values
+        addresses = {
+            {"SP", 256}, {"LCL", 300}, {"ARG", 400}, {"THIS", 3000}, {"THAT", 3010},
+            {"R0", 0}, {"R1", 1}, {"R2", 2}, {"R3", 3}, {"R4", 4},
+            {"R5", 5}, {"R6", 6}, {"R7", 7}, {"R8", 8}, {"R9", 9},
+            {"R10", 10}, {"R11", 11}, {"R12", 12}, {"R13", 13}, {"R14", 14}, {"R15", 15}
+        };
+    }
 
-	bool contains(const string& symbol) const {
-		return addresses.find(symbol) != addresses.end();
-	}
+    bool contains(const string& symbol) const {
+        return addresses.find(symbol) != addresses.end();
+    }
 
-	void addEntry(const string& symbol, int& SP) {
-		if (contains(symbol)) {
-			throw runtime_error("Symbol already exists in the table.");
-		}
-		addresses[symbol] = SP;
-	}
+    void setAddress(const string& symbol, int value) {
+        addresses[symbol] = value;
+    }
 
-	int getValueAddress(const string& symbol) const {
-		auto it = addresses.find(symbol);
-		if (it != addresses.end()) {
-			return it->second;
-		}
-		throw runtime_error("Symbol not found in the table.");
-	}
+    int getAddress(const string& symbol) const {
+        auto it = addresses.find(symbol);
+        if (it != addresses.end()) {
+            return it->second;
+        }
+        throw runtime_error("Symbol not found in the table: " + symbol);
+    }
 
-	unordered_map<string, int>& getAddress() {
-		return addresses;
-	}
+    void setMemory(int address, int value) {
+        memory[address] = value;
+    }
 
-	void addStack(const int& value) {
-		myStack.push(value);
-	}
+    int getMemory(int address) const {
+        auto it = memory.find(address);
+        if (it != memory.end()) {
+            return it->second;
+        }
+        throw runtime_error("Address not found in memory: " + to_string(address));
+    }
 
-	void popStack() {
-		myStack.pop();
-	}
+    void pushStack(int value) {
+        myStack.push(value);
+        addresses["SP"]++;
+    }
+
+    int popStack() {
+        if (myStack.empty()) {
+            throw runtime_error("Stack underflow.");
+        }
+        int value = myStack.top();
+        myStack.pop();
+        addresses["SP"]--;
+        return value;
+    }
+
+    void printRAM() const {
+        for (const auto& pair : addresses) {
+            cout << pair.first << ": " << pair.second << endl;
+        }
+        for (const auto& pair : memory) {
+            cout << pair.first << ": " << pair.second << endl;
+        }
+    }
 };

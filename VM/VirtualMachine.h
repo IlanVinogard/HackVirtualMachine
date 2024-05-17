@@ -55,6 +55,7 @@ public:
 						codeWriter.writePushPop(commandType, Parser::arg1(validLine), Parser::arg2(validLine));
 					} // continue next chapter ...
 
+					//add print RAM.
 				} catch (const runtime_error& e) {
 					cerr << "Error: " << e.what() << endl;
 				}

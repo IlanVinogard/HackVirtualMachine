@@ -55,5 +55,8 @@
     <None Include="Prog.asm">
       <Filter>Source Files\Result</Filter>
     </None>
+    <None Include="Tests\SimpleAdd.vm">
+      <Filter>Source Files\Tests</Filter>
+    </None>
   </ItemGroup>
 </Project>
