@@ -130,11 +130,11 @@
     <ClCompile Include="HackVirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VM\CodeWriter.h" />
     <ClInclude Include="VM\Parser.h" />
     <ClInclude Include="VM\Utility\RAM.h" />
     <ClInclude Include="VM\Utility\Utility.h" />
+    <ClInclude Include="VM\VirtualMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tests/BasicTest.vm" />

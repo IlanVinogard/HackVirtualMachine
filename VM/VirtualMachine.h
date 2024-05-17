@@ -3,6 +3,7 @@
 #include <fstream>
 #include "Parser.h"
 #include "CodeWriter.h"
+#include "../VM/Utility/RAM.h"
 #include <string>
 
 using namespace std;
@@ -11,6 +12,7 @@ class VirtualMachine {
 private:
 	ifstream input;
 	ofstream output;
+	RAM ram;
 public:
 	VirtualMachine(const string& inputPath, const string& outputPath) {
 	input.open(inputPath, ios::in);
@@ -32,6 +34,7 @@ public:
 	}
 
 	void convertFile() {
+		CodeWriter codeWriter(output, ram);
 		string line;
 		while (getline(input, line)) {
 			if (Parser::isNotCommentLine(line)) {
@@ -39,9 +42,19 @@ public:
 					string validLine = Parser::cleanAndValidateLine(line);
 
 					// Add comment to file.
-					output << "//" + validLine << endl;
+					output << "// " + validLine << endl;
 
-					// Logic Code In Process :D
+					// check command type.
+					string commandType = Parser::commandType(validLine);
+					
+					// write command to file.
+					if (commandType == "C_ARITHMEIC") {
+						codeWriter.writeArithmetic(Parser::arg1(validLine));
+					}
+					else if (commandType == "C_PUSH" || commandType == "C_POP") {
+						codeWriter.writePushPop(commandType, Parser::arg1(validLine), Parser::arg2(validLine));
+					} // continue next chapter ...
+
 				} catch (const runtime_error& e) {
 					cerr << "Error: " << e.what() << endl;
 				}
