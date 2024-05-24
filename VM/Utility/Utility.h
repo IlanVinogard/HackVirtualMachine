@@ -1,9 +1,12 @@
 #pragma once
 
 #include <iostream>
-#include <fstream>
+#include <filesystem>
+#include <vector>
+#include <string>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 class Ui {
 public:
@@ -24,32 +27,25 @@ public:
 
 class File {
 public:
-    static string askFilePath() {
-        cout << "Please insert file path\n";
-        cout << "make sure the file ends with .vm\n";
-        cout << "File path -> ";
+    static string askDirectoryPath() {
+        cout << "Please insert directory path containing .vm files\n";
+        cout << "Directory path -> ";
         string path;
         cin >> path;
         return path;
     }
 
-    static string askIfError(string& path) {
-        cout << "\nInvalid path!\n";
-        cout << "Example -> path.vm\n";
-        cout << "Try again.\n";
-        cout << "File path -> ";
-        cin >> path;
-        return path;
+    static bool isValidDirectory(const string& path) {
+        return fs::is_directory(path);
     }
 
-    static bool endsWith(const string& path, string format) {
-        if (path.size() - 1 < format.size()) return false;
-
-        return path.compare(path.size() - format.size(), format.size(), format) == 0;
-    }
-
-    static void isValidFormat(string& path, bool& isFormat) {
-        path = askIfError(path);
-        isFormat = endsWith(path, ".vm");
+    static vector<string> getVMFiles(const string& directoryPath) {
+        vector<string> vmFiles;
+        for (const auto& entry : fs::directory_iterator(directoryPath)) {
+            if (entry.path().extension() == ".vm") {
+                vmFiles.push_back(entry.path().string());
+            }
+        }
+        return vmFiles;
     }
 };

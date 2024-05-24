@@ -25,6 +25,24 @@
     <Filter Include="Source Files\Result">
       <UniqueIdentifier>{1f7bf67f-0d9b-47d0-8020-e74acc7dc378}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tests\BasicLoop">
+      <UniqueIdentifier>{907c41d0-2a83-4f95-9cd3-fb4c94397d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\FibonacciElement">
+      <UniqueIdentifier>{db4268a1-e159-4b09-b175-c8676ac61fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\FibonacciSeries">
+      <UniqueIdentifier>{bec7aa27-dfd9-41ac-8993-d3438fc2651a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\NestedCall">
+      <UniqueIdentifier>{e744e17b-ed90-4034-97fc-b9cc1c2a6c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\SimpleFunction">
+      <UniqueIdentifier>{26ffd7c4-bb1e-434f-85d9-d57f0242bb08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests\StaticsTest">
+      <UniqueIdentifier>{fdf03311-2451-4ce8-9331-4abecbac3bdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HackVirtualMachine.cpp">
@@ -66,6 +84,96 @@
     </None>
     <None Include="Tests\StaticTest.vm">
       <Filter>Source Files\Tests</Filter>
+    </None>
+    <None Include="Tests\BasicLoop\BasicLoop.cmp">
+      <Filter>Source Files\Tests\BasicLoop</Filter>
+    </None>
+    <None Include="Tests\BasicLoop\BasicLoop.out">
+      <Filter>Source Files\Tests\BasicLoop</Filter>
+    </None>
+    <None Include="Tests\BasicLoop\BasicLoop.tst">
+      <Filter>Source Files\Tests\BasicLoop</Filter>
+    </None>
+    <None Include="Tests\BasicLoop\BasicLoop.vm">
+      <Filter>Source Files\Tests\BasicLoop</Filter>
+    </None>
+    <None Include="Tests\BasicLoop\BasicLoopVME.tst">
+      <Filter>Source Files\Tests\BasicLoop</Filter>
+    </None>
+    <None Include="Tests\FibonacciElement\FibonacciElement.cmp">
+      <Filter>Source Files\Tests\FibonacciElement</Filter>
+    </None>
+    <None Include="Tests\FibonacciElement\FibonacciElement.tst">
+      <Filter>Source Files\Tests\FibonacciElement</Filter>
+    </None>
+    <None Include="Tests\FibonacciElement\FibonacciElementVME.tst">
+      <Filter>Source Files\Tests\FibonacciElement</Filter>
+    </None>
+    <None Include="Tests\FibonacciElement\Main.vm">
+      <Filter>Source Files\Tests\FibonacciElement</Filter>
+    </None>
+    <None Include="Tests\FibonacciElement\Sys.vm">
+      <Filter>Source Files\Tests\FibonacciElement</Filter>
+    </None>
+    <None Include="Tests\FibonacciSeries\FibonacciSeries.cmp">
+      <Filter>Source Files\Tests\FibonacciSeries</Filter>
+    </None>
+    <None Include="Tests\FibonacciSeries\FibonacciSeries.tst">
+      <Filter>Source Files\Tests\FibonacciSeries</Filter>
+    </None>
+    <None Include="Tests\FibonacciSeries\FibonacciSeries.vm">
+      <Filter>Source Files\Tests\FibonacciSeries</Filter>
+    </None>
+    <None Include="Tests\FibonacciSeries\FibonacciSeriesVME.tst">
+      <Filter>Source Files\Tests\FibonacciSeries</Filter>
+    </None>
+    <None Include="Tests\NestedCall\NestedCall.cmp">
+      <Filter>Source Files\Tests\NestedCall</Filter>
+    </None>
+    <None Include="Tests\NestedCall\NestedCall.html">
+      <Filter>Source Files\Tests\NestedCall</Filter>
+    </None>
+    <None Include="Tests\NestedCall\NestedCall.tst">
+      <Filter>Source Files\Tests\NestedCall</Filter>
+    </None>
+    <None Include="Tests\NestedCall\NestedCallStack.html">
+      <Filter>Source Files\Tests\NestedCall</Filter>
+    </None>
+    <None Include="Tests\NestedCall\NestedCallVME.tst">
+      <Filter>Source Files\Tests\NestedCall</Filter>
+    </None>
+    <None Include="Tests\NestedCall\Sys.vm">
+      <Filter>Source Files\Tests\NestedCall</Filter>
+    </None>
+    <None Include="Tests\SimpleFunction\SimpleFunction.cmp">
+      <Filter>Source Files\Tests\SimpleFunction</Filter>
+    </None>
+    <None Include="Tests\SimpleFunction\SimpleFunction.tst">
+      <Filter>Source Files\Tests\SimpleFunction</Filter>
+    </None>
+    <None Include="Tests\SimpleFunction\SimpleFunction.vm">
+      <Filter>Source Files\Tests\SimpleFunction</Filter>
+    </None>
+    <None Include="Tests\SimpleFunction\SimpleFunctionVME.tst">
+      <Filter>Source Files\Tests\SimpleFunction</Filter>
+    </None>
+    <None Include="Tests\StaticsTest\Class1.vm">
+      <Filter>Source Files\Tests\StaticsTest</Filter>
+    </None>
+    <None Include="Tests\StaticsTest\Class2.vm">
+      <Filter>Source Files\Tests\StaticsTest</Filter>
+    </None>
+    <None Include="Tests\StaticsTest\StaticsTest.cmp">
+      <Filter>Source Files\Tests\StaticsTest</Filter>
+    </None>
+    <None Include="Tests\StaticsTest\StaticsTest.tst">
+      <Filter>Source Files\Tests\StaticsTest</Filter>
+    </None>
+    <None Include="Tests\StaticsTest\StaticsTestVME.tst">
+      <Filter>Source Files\Tests\StaticsTest</Filter>
+    </None>
+    <None Include="Tests\StaticsTest\Sys.vm">
+      <Filter>Source Files\Tests\StaticsTest</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 
 class Parser {
 public:
-	static string cleanAndValidateLine(const string& line) {
+    static string cleanAndValidateLine(const string& line) {
         regex pattern("\\s+");
         string validLine = regex_replace(line, pattern, " ");
 
@@ -14,15 +14,26 @@ public:
 
         if (firstNonSpace != std::string::npos && lastNonSpace != std::string::npos) {
             validLine = validLine.substr(firstNonSpace, lastNonSpace - firstNonSpace + 1);
+        } else {
+            validLine = "";
         }
-        
-        return validLine;
-	}
 
-	static bool isNotCommentLine(const string line) {
-		if (line.empty() || line.find("//") != string::npos) return false;
-		return true;
-	}
+        return validLine;
+    }
+
+    static bool isNotCommentLine(const string& line) {
+        string trimmedLine = line.substr(0, line.find("//"));
+        trimmedLine = cleanAndValidateLine(trimmedLine);
+        return !trimmedLine.empty();
+    }
+
+    static string removeComments(const string& line) {
+        size_t commentStart = line.find("//");
+        if (commentStart != string::npos) {
+            return line.substr(0, commentStart);
+        }
+        return line;
+    }
 
     static string commandType(const string& line) {
         string command = line.substr(0, line.find_first_of(' '));
@@ -44,10 +55,10 @@ public:
 
         // labels C_LABEL.
         else if (command == "label") return "C_LABEL";
-        
+
         // goto C_GOTO.
         else if (command == "goto") return "C_GOTO";
-        
+
         // if-goto C_IF.
         else if (command == "if-goto") return "C_IF";
 
@@ -70,8 +81,7 @@ public:
         size_t firstSpace = line.find_first_of(' ');
         if (firstSpace == string::npos) return "";
 
-        string validLine = line.substr(firstSpace + 1);
-        return validLine;
+        return line.substr(firstSpace + 1);
     }
 
     static string arg1(const string& commandType, const string& line) {
@@ -80,9 +90,8 @@ public:
         string remaining = updateValidLine(line);
         size_t firstSpace = remaining.find_first_of(' ');
         if (firstSpace == string::npos) return remaining;
-        
-        string arg1 = remaining.substr(0, firstSpace);
-        return arg1;
+
+        return remaining.substr(0, firstSpace);
     }
 
     static int arg2(const string& line) {
@@ -92,7 +101,6 @@ public:
             throw runtime_error("No second argument found in line: " + line);
         }
 
-        string secondPart = remaining.substr(firstSpace + 1);
-        return stoi(secondPart);
+        return stoi(remaining.substr(firstSpace + 1));
     }
 };

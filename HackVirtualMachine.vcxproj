@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,9 +140,39 @@
   <ItemGroup>
     <None Include="Tests/BasicTest.vm" />
     <None Include="Prog.asm" />
+    <None Include="Tests\BasicLoop\BasicLoop.cmp" />
+    <None Include="Tests\BasicLoop\BasicLoop.out" />
+    <None Include="Tests\BasicLoop\BasicLoop.tst" />
+    <None Include="Tests\BasicLoop\BasicLoop.vm" />
+    <None Include="Tests\BasicLoop\BasicLoopVME.tst" />
+    <None Include="Tests\FibonacciElement\FibonacciElement.cmp" />
+    <None Include="Tests\FibonacciElement\FibonacciElement.tst" />
+    <None Include="Tests\FibonacciElement\FibonacciElementVME.tst" />
+    <None Include="Tests\FibonacciElement\Main.vm" />
+    <None Include="Tests\FibonacciElement\Sys.vm" />
+    <None Include="Tests\FibonacciSeries\FibonacciSeries.cmp" />
+    <None Include="Tests\FibonacciSeries\FibonacciSeries.tst" />
+    <None Include="Tests\FibonacciSeries\FibonacciSeries.vm" />
+    <None Include="Tests\FibonacciSeries\FibonacciSeriesVME.tst" />
+    <None Include="Tests\NestedCall\NestedCall.cmp" />
+    <None Include="Tests\NestedCall\NestedCall.html" />
+    <None Include="Tests\NestedCall\NestedCall.tst" />
+    <None Include="Tests\NestedCall\NestedCallStack.html" />
+    <None Include="Tests\NestedCall\NestedCallVME.tst" />
+    <None Include="Tests\NestedCall\Sys.vm" />
     <None Include="Tests\PointerTest.vm" />
     <None Include="Tests\SimpleAdd.vm" />
+    <None Include="Tests\SimpleFunction\SimpleFunction.cmp" />
+    <None Include="Tests\SimpleFunction\SimpleFunction.tst" />
+    <None Include="Tests\SimpleFunction\SimpleFunction.vm" />
+    <None Include="Tests\SimpleFunction\SimpleFunctionVME.tst" />
     <None Include="Tests\StackTest.vm" />
+    <None Include="Tests\StaticsTest\Class1.vm" />
+    <None Include="Tests\StaticsTest\Class2.vm" />
+    <None Include="Tests\StaticsTest\StaticsTest.cmp" />
+    <None Include="Tests\StaticsTest\StaticsTest.tst" />
+    <None Include="Tests\StaticsTest\StaticsTestVME.tst" />
+    <None Include="Tests\StaticsTest\Sys.vm" />
     <None Include="Tests\StaticTest.vm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

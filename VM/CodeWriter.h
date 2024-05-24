@@ -15,218 +15,80 @@ class CodeWriter {
 private:
 	ofstream& output;
 	RAM& ram;
+	int labelCounter = 0;
 
 public:
 	CodeWriter(ofstream& output, RAM& ram) : output(output), ram(ram) {};
 
 	void writePushPop(const string& command, const string& segment, const int& index) {
-		// argument(ARG).
-		if (command == "C_PUSH" && segment == "argument") {
-			output << "@ARG" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "A=D+A" << "\n"
-				<< "D=M" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			int baseAddr = ram.getAddress("ARG");
-			int value = ram.getMemory(baseAddr + index);
-			ram.pushStack(value);
-		}
-		else if (command == "C_POP" && segment == "argument") {
-			output << "@ARG" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "D=D+A" << "\n"
-				<< "@R13" << "\n"
-				<< "M=D" << "\n"
-				<< SP_DEC
-				<< LOAD_SP_TO_D
-				<< "@R13" << "\n"
-				<< "A=M" << "\n"
-				<< "M=D" << "\n";
-			int baseAddr = ram.getAddress("ARG");
-			int value = ram.popStack();
-			ram.setMemory(baseAddr + index, value);
-		}
-
-		// local(LCL).
-		if (command == "C_PUSH" && segment == "local") {
-			output << "@LCL" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "A=D+A" << "\n"
-				<< "D=M" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			int baseAddr = ram.getAddress("LCL");
-			int value = ram.getMemory(baseAddr + index);
-			ram.pushStack(value);
-		}
-		else if (command == "C_POP" && segment == "local") {
-			output << "@LCL" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "D=D+A" << "\n"
-				<< "@R13" << "\n"
-				<< "M=D" << "\n"
-				<< SP_DEC
-				<< LOAD_SP_TO_D
-				<< "@R13" << "\n"
-				<< "A=M" << "\n"
-				<< "M=D" << "\n";
-			int baseAddr = ram.getAddress("LCL");
-			int value = ram.popStack();
-			ram.setMemory(baseAddr + index, value);
-		}
-
-		// static.
-		if (command == "C_PUSH" && segment == "static") {
-			output << "@Static" << index << "\n"
-				<< "D=M" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			int value = ram.getMemory(16 + index);
-			ram.pushStack(value);
-		}
-		else if (command == "C_POP" && segment == "static") {
-			output << SP_DEC
-				<< LOAD_SP_TO_D
-				<< "@Static" << index << "\n"
-				<< "M=D" << "\n";
-			int value = ram.popStack();
-			ram.setMemory(16 + index, value);
-		}
-
-		// constant.
-		if (command == "C_PUSH" && segment == "constant") {
-			output << "@" << index << "\n"
-				<< "D=A" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			ram.pushStack(index);
-		}
-
-		// this(THIS).
-		if (command == "C_PUSH" && segment == "this") {
-			output << "@THIS" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "A=D+A" << "\n"
-				<< "D=M" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			int baseAddr = ram.getAddress("THIS");
-			int value = ram.getMemory(baseAddr + index);
-			ram.pushStack(value);
-		}
-		else if (command == "C_POP" && segment == "this") {
-			output << "@THIS" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "D=D+A" << "\n"
-				<< "@R13" << "\n"
-				<< "M=D" << "\n"
-				<< SP_DEC
-				<< LOAD_SP_TO_D
-				<< "@R13" << "\n"
-				<< "A=M" << "\n"
-				<< "M=D" << "\n";
-			int baseAddr = ram.getAddress("THIS");
-			int value = ram.popStack();
-			ram.setMemory(baseAddr + index, value);
-		}
-
-		// that(THAT).
-		if (command == "C_PUSH" && segment == "that") {
-			output << "@THAT" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "A=D+A" << "\n"
-				<< "D=M" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			int baseAddr = ram.getAddress("THAT");
-			int value = ram.getMemory(baseAddr + index);
-			ram.pushStack(value);
-		}
-		else if (command == "C_POP" && segment == "that") {
-			output << "@THAT" << "\n"
-				<< "D=M" << "\n"
-				<< "@" << index << "\n"
-				<< "D=D+A" << "\n"
-				<< "@R13" << "\n"
-				<< "M=D" << "\n"
-				<< SP_DEC
-				<< LOAD_SP_TO_D
-				<< "@R13" << "\n"
-				<< "A=M" << "\n"
-				<< "M=D" << "\n";
-			int baseAddr = ram.getAddress("THAT");
-			int value = ram.popStack();
-			ram.setMemory(baseAddr + index, value);
-		}
-
-		// pointer.
-		if (command == "C_PUSH" && segment == "pointer") {
-			if (index == 0) {
-				output << "@THIS" << "\n"
-					<< "D=M" << "\n"
+		if (command == "C_PUSH") {
+			if (segment == "constant") {
+				output << "@" << index << "\n"
+					<< "D=A" << "\n"
 					<< WRITE_D_TO_SP
 					<< SP_INC;
-				ram.pushStack(ram.getAddress("THIS"));
-			}
-			else if (index == 1) {
-				output << "@THAT" << "\n"
-					<< "D=M" << "\n"
-					<< WRITE_D_TO_SP
-					<< SP_INC;
-				ram.pushStack(ram.getAddress("THAT"));
+				ram.pushStack(index);
 			}
 			else {
-				throw runtime_error("Not valid pointer must be either 0 or 1 current -> index: " + to_string(index));
-			}
-		}
-		else if (command == "C_POP" && segment == "pointer") {
-			if (index == 0) {
-				output << SP_DEC
-					<< LOAD_SP_TO_D
-					<< "@THIS" << "\n"
-					<< "M=D" << "\n";
-				int value = ram.popStack();
-				ram.setAddress("THIS", value);
-			}
-			else if (index == 1) {
-				output << SP_DEC
-					<< LOAD_SP_TO_D
-					<< "@THAT" << "\n"
-					<< "M=D" << "\n";
-				int value = ram.popStack();
-				ram.setAddress("THAT", value);
-			}
-			else {
-				throw runtime_error("Not valid pointer must be either 0 or 1 current -> index: " + to_string(index));
-			}
-		}
+				string segmentBase;
+				if (segment == "argument") segmentBase = "ARG";
+				else if (segment == "local") segmentBase = "LCL";
+				else if (segment == "this") segmentBase = "THIS";
+				else if (segment == "that") segmentBase = "THAT";
+				else if (segment == "temp") {
+					output << "@" << (5 + index) << "\n";
+					segmentBase = "";
+				}
+				else if (segment == "pointer") {
+					segmentBase = (index == 0) ? "THIS" : "THAT";
+				}
+				else if (segment == "static") {
+					output << "@Static" << index << "\n";
+					segmentBase = "";
+				}
 
-		// temp(Temp).
-		if (command == "C_PUSH" && segment == "temp") {
-			int tempAddress = 5 + index;
-			output << "@" << tempAddress << "\n"
-				<< "D=M" << "\n"
-				<< WRITE_D_TO_SP
-				<< SP_INC;
-			int value = ram.getMemory(tempAddress);
-			ram.pushStack(value);
+				if (!segmentBase.empty()) {
+					output << "@" << segmentBase << "\n"
+						<< "D=M" << "\n"
+						<< "@" << index << "\n"
+						<< "A=D+A" << "\n"
+						<< "D=M" << "\n"
+						<< WRITE_D_TO_SP
+						<< SP_INC;
+				}
+			}
 		}
-		else if (command == "C_POP" && segment == "temp") {
-			int tempAddress = 5 + index;
-			output << SP_DEC
-				<< LOAD_SP_TO_D
-				<< "@" << tempAddress << "\n"
-				<< "M=D" << "\n";
-			int value = ram.popStack();
-			ram.setMemory(tempAddress, value);
+		else if (command == "C_POP") {
+			string segmentBase;
+			if (segment == "argument") segmentBase = "ARG";
+			else if (segment == "local") segmentBase = "LCL";
+			else if (segment == "this") segmentBase = "THIS";
+			else if (segment == "that") segmentBase = "THAT";
+			else if (segment == "temp") {
+				output << "@" << (5 + index) << "\n";
+				segmentBase = "";
+			}
+			else if (segment == "pointer") {
+				segmentBase = (index == 0) ? "THIS" : "THAT";
+			}
+			else if (segment == "static") {
+				output << "@Static" << index << "\n";
+				segmentBase = "";
+			}
+
+			if (!segmentBase.empty()) {
+				output << "@" << segmentBase << "\n"
+					<< "D=M" << "\n"
+					<< "@" << index << "\n"
+					<< "D=D+A" << "\n"
+					<< "@R13" << "\n"
+					<< "M=D" << "\n"
+					<< SP_DEC
+					<< LOAD_SP_TO_D
+					<< "@R13" << "\n"
+					<< "A=M" << "\n"
+					<< "M=D" << "\n";
+			}
 		}
 	}
 
@@ -320,4 +182,197 @@ public:
 		}
 	}
 
+	void writeLabel(const string& label) {
+		output << "(" << label << ")" << endl;
+	}
+
+	void writeGoto(const string& label) {
+		output << "@" << label << endl;
+		output << "0;JMP" << endl;
+	}
+
+	void writeIf(const string& label) {
+		output << SP_DEC;
+		output << "D=M" << endl;
+		output << "@" << label << endl;
+		output << "D;JNE" << endl;
+	}
+
+	void writeFunction(const string& functionName, int numLocals) {
+		output << "(" << functionName << ")" << endl;
+		for (int i = 0; i < numLocals; ++i) {
+			writePushPop("C_PUSH", "constant", 0);
+		}
+	}
+
+	void writeCall(const string& functionName, int numArgs) {
+		string returnLabel = "RETURN_" + to_string(labelCounter++);
+
+		// Push return address
+		output << "@" << returnLabel << endl;
+		output << "D=A" << endl;
+		output << WRITE_D_TO_SP << SP_INC;
+		ram.pushStack(ram.getAddress("SP"));
+		cout << "Pushing return address: " << ram.getAddress("SP") << endl;
+
+		// Push LCL
+		pushRegisterToStack("LCL");
+		// Push ARG
+		pushRegisterToStack("ARG");
+		// Push THIS
+		pushRegisterToStack("THIS");
+		// Push THAT
+		pushRegisterToStack("THAT");
+
+		// Reposition ARG
+		output << "@SP" << endl;
+		output << "D=M" << endl;
+		output << "@5" << endl;
+		output << "D=D-A" << endl;
+		output << "@" << numArgs << endl;
+		output << "D=D-A" << endl;
+		output << "@ARG" << endl;
+		output << "M=D" << endl;
+		ram.setAddress("ARG", ram.getAddress("SP") - numArgs - 5);
+		cout << "Setting ARG to: " << ram.getAddress("SP") - numArgs - 5 << endl;
+
+		// Reposition LCL
+		output << "@SP" << endl;
+		output << "D=M" << endl;
+		output << "@LCL" << endl;
+		output << "M=D" << endl;
+		ram.setAddress("LCL", ram.getAddress("SP"));
+		cout << "Setting LCL to: " << ram.getAddress("SP") << endl;
+
+		// Jump to function
+		output << "@" << functionName << endl;
+		output << "0;JMP" << endl;
+
+		// Declare return label
+		output << "(" << returnLabel << ")" << endl;
+		ram.setAddress(returnLabel, ram.getAddress("SP"));
+		cout << "Setting return label address: " << ram.getAddress("SP") << endl;
+	}
+
+	void pushRegisterToStack(const string& reg) {
+		output << "@" << reg << endl;
+		output << "D=M" << endl;
+		output << WRITE_D_TO_SP << SP_INC;
+		ram.pushStack(ram.getAddress(reg));
+		cout << "Pushing register " << reg << " value: " << ram.getAddress(reg) << " onto stack" << endl;
+	}
+
+	void writeReturn() {
+		// FRAME = LCL
+		output << "@LCL" << endl;
+		output << "D=M" << endl;
+		output << "@R13" << endl;
+		output << "M=D" << endl;
+		int frame = ram.getAddress("LCL");
+		ram.setMemory(13, frame);
+		cout << "Setting FRAME (LCL) to: " << frame << endl;
+
+		// RET = *(FRAME - 5)
+		output << "@5" << endl;
+		output << "A=D-A" << endl;
+		output << "D=M" << endl;
+		output << "@R14" << endl;
+		output << "M=D" << endl;
+		try {
+			int retAddr = ram.getMemory(frame - 5);
+			ram.setMemory(14, retAddr);
+			cout << "Setting RET address (FRAME - 5) to: " << retAddr << endl;
+		}
+		catch (const runtime_error& e) {
+			cerr << "Error: " << e.what() << " at RET address (FRAME - 5)" << endl;
+		}
+
+		// *ARG = pop()
+		if (ram.getStackSize() > 0) {
+			output << SP_DEC;
+			output << "D=M" << endl;
+			output << "@ARG" << endl;
+			output << "A=M" << endl;
+			output << "M=D" << endl;
+			int popValue = ram.popStack();
+			ram.setMemory(ram.getAddress("ARG"), popValue);
+			cout << "Setting *ARG to popped value: " << popValue << endl;
+		}
+		else {
+			cerr << "Error: Stack underflow during return" << endl;
+		}
+
+		// SP = ARG + 1
+		output << "@ARG" << endl;
+		output << "D=M+1" << endl;
+		output << "@SP" << endl;
+		output << "M=D" << endl;
+		ram.setAddress("SP", ram.getAddress("ARG") + 1);
+		cout << "Setting SP to: " << ram.getAddress("SP") << endl;
+
+		// THAT = *(FRAME - 1)
+		output << "@R13" << endl;
+		output << "AM=M-1" << endl;
+		output << "D=M" << endl;
+		output << "@THAT" << endl;
+		output << "M=D" << endl;
+		try {
+			int thatValue = ram.getMemory(frame - 1);
+			ram.setAddress("THAT", thatValue);
+			cout << "Setting THAT to: " << thatValue << endl;
+		}
+		catch (const runtime_error& e) {
+			cerr << "Error: " << e.what() << " at THAT address (FRAME - 1)" << endl;
+		}
+
+		// THIS = *(FRAME - 2)
+		output << "@R13" << endl;
+		output << "AM=M-1" << endl;
+		output << "D=M" << endl;
+		output << "@THIS" << endl;
+		output << "M=D" << endl;
+		try {
+			int thisValue = ram.getMemory(frame - 2);
+			ram.setAddress("THIS", thisValue);
+			cout << "Setting THIS to: " << thisValue << endl;
+		}
+		catch (const runtime_error& e) {
+			cerr << "Error: " << e.what() << " at THIS address (FRAME - 2)" << endl;
+		}
+
+		// ARG = *(FRAME - 3)
+		output << "@R13" << endl;
+		output << "AM=M-1" << endl;
+		output << "D=M" << endl;
+		output << "@ARG" << endl;
+		output << "M=D" << endl;
+		try {
+			int argValue = ram.getMemory(frame - 3);
+			ram.setAddress("ARG", argValue);
+			cout << "Setting ARG to: " << argValue << endl;
+		}
+		catch (const runtime_error& e) {
+			cerr << "Error: " << e.what() << " at ARG address (FRAME - 3)" << endl;
+		}
+
+		// LCL = *(FRAME - 4)
+		output << "@R13" << endl;
+		output << "AM=M-1" << endl;
+		output << "D=M" << endl;
+		output << "@LCL" << endl;
+		output << "M=D" << endl;
+		try {
+			int lclValue = ram.getMemory(frame - 4);
+			ram.setAddress("LCL", lclValue);
+			cout << "Setting LCL to: " << lclValue << endl;
+		}
+		catch (const runtime_error& e) {
+			cerr << "Error: " << e.what() << " at LCL address (FRAME - 4)" << endl;
+		}
+
+		// goto RET
+		output << "@R14" << endl;
+		output << "A=M" << endl;
+		output << "0;JMP" << endl;
+	}
 };

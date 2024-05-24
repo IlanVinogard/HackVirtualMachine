@@ -9,29 +9,51 @@ int main()
         while (true) {
             Ui::uiLogo();
 
-            string path = File::askFilePath();
+            string directoryPath = File::askDirectoryPath();
 
-            // check for suffix '.vm' and clear console.
-            bool isFormat = File::endsWith(path, ".vm");
+            // check for valid directory and clear console.
+            bool isValidDir = File::isValidDirectory(directoryPath);
             Ui::clear();
 
-            // if not vaild format force him to be :D.
-            while (!isFormat) {
+            // if not valid directory force user to re-enter.
+            while (!isValidDir) {
                 Ui::uiLogo();
-                File::isValidFormat(path, isFormat);
+                cout << "Invalid directory!" << endl;
+                directoryPath = File::askDirectoryPath();
+                isValidDir = File::isValidDirectory(directoryPath);
                 Ui::clear();
             }
 
-            VirtualMachine virtualMachine(path, "Prog.asm");
+            vector<string> vmFiles = File::getVMFiles(directoryPath);
+
+            if (vmFiles.empty()) {
+                cerr << "No .vm files found in the directory!" << endl;
+                continue;
+            }
+
+            // Prioritize Sys.vm if it exists
+            vector<string> orderedFiles;
+            for (const auto& file : vmFiles) {
+                if (fs::path(file).filename() == "Sys.vm") {
+                    orderedFiles.insert(orderedFiles.begin(), file);
+                }
+                else {
+                    orderedFiles.push_back(file);
+                }
+            }
+
+            RAM ram;
+            VirtualMachine virtualMachine("Prog.asm", ram);
 
             try {
-                cout << "File successfully opened" << endl;
-                // converting file to new file named XXX.asm.
-                virtualMachine.convertFile();
+                cout << "Files successfully opened" << endl;
+                // converting files to new file named Prog.asm.
+                virtualMachine.convertFiles(orderedFiles);
 
                 cout << "Finished converting!\n" << endl;
 
-            } catch (const runtime_error& e) {
+            }
+            catch (const runtime_error& e) {
                 cerr << "Error during translating: " << e.what() << endl;
             }
         }
